@@ -41,5 +41,3 @@
 - `final` 和 `static` 往往搭配使用，不会导致类加载，效率更高，底层编译器做了优化处理
 
 - 包装类（Integer、Double、Float、Boolean 等都是 final），String 也是 final 类
-
-
