@@ -31,7 +31,7 @@ public class Arrays_ {
         System.out.println(index);
         // copyOf 方法
         Integer[] integers = Arrays.copyOf(arr, arr.length);
-        System.out.println(Arrays.toString(integers    )
+        System.out.println(Arrays.toString(integers)
         // fill 方法替换数组元素
         Integer[] i1 = {1, 2, 4};
         Arrays.fill(i1, 0);
