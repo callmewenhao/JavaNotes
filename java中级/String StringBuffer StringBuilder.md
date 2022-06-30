@@ -226,6 +226,6 @@ StringBuilder 和 StringBuffer 均代表可变的字符序列，方法是样的�
 
 3. 如果字符串存在大量的修改操作，开仕多线程的情况，使用 StringBuffer
 
-4、如果我们字符串很少修改，被多个对象引用，使用String，比如配置信息等
+4. 如果我们字符串很少修改，被多个对象引用，使用String，比如配置信息等
 
 StringBuilder 的方法使用和 StringBuffer 一样，不再说
