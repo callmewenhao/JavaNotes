@@ -92,3 +92,18 @@ while(iterator.hasNext()) {
 }
 ```
 
+## HashMap 小结
+
+- Map 接口的常用实现类：HashMap、Hashtable 和 Properties
+
+- HashMap 是 Map 接口使用频率最高的实现类
+
+- HashMap 是以 key-val 对的方式来存储数据
+
+- key 不能重复，但是是值可以重复，允许使用 null 建和 null 值。
+
+- 如果添加相同的 key，则会覆盖原来的 key-val，等同于修改（key不会替换，val会替换）
+
+- 与 HashSet 一样，不保证映射的顺序，因为底层是以 hash 表的方式来存储的
+
+- HashMap 没有实现同步，因此是线程不安全的
