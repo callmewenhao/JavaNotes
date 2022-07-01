@@ -208,7 +208,7 @@ public synchronized E get(int index){
 
 ## LinkedList 类
 
-### 简单介绍12341234325435
+### 简单介绍
 
 - LinkedList 底层实现了双向链表和双端队列特点
 
@@ -331,3 +331,25 @@ tail = newEelment;
 ```
 
 - 这样的话，我们遍历 LinkedHashSet 也能确保插入顺序和遍历顺序一致
+
+## Set接口实现类——TreeSet
+
+```java
+//1．当我们使用无参构造器，创建TreeSet时，仍然是无序的
+//2．使用TreeSet提供的一个构造器，可以传入一个比较器（匿名内部类）
+TreeSet<String> ts = new TreeSet<>(new Comparator<String>() {
+    @Override
+    public int compare(String o1, String o2) {
+        return o1.compareTo(o2);// 由小到大
+        // 注意：如果比较的结果相同，TreeSet不会进行任何处理
+    }
+});
+// 添加元素 在add的时候就会进行比较
+ts.add("wenhao"); 
+ts.add("zhao");
+ts.add("xiao");
+ts.add("bendan");
+// 打印
+System.out.println(ts);
+```
+
