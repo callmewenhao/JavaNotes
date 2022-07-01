@@ -1,4 +1,12 @@
+[TOC]
+
 # Map 接口
+
+**继承实现关系图**
+
+<div align="center"> 
+    <img src="images/c1.png" width=500>
+</div>
 
 ## Map 接口实现类的特点
 
@@ -92,7 +100,9 @@ while(iterator.hasNext()) {
 }
 ```
 
-## HashMap 小结
+## HashMap
+
+### 基本介绍
 
 - Map 接口的常用实现类：HashMap、Hashtable 和 Properties
 
@@ -107,3 +117,98 @@ while(iterator.hasNext()) {
 - 与 HashSet 一样，不保证映射的顺序，因为底层是以 hash 表的方式来存储的
 
 - HashMap 没有实现同步，因此是线程不安全的
+
+### HashMap 底层扩容机制
+
+- HashMap 底层维护了 Node 类型的数组 table，默认为 null
+
+- 当创建对象时，将加载因子（loadfactor）初始化为0.75
+
+- 当添加 key-val 时，通过 key 的哈希值得到在 table 的索引。然后判断该索引处是否有元素，如果没有元素直接添加。如果该索引处有完素，继续判断该元素的 key 是否和准备加入的 key 相等，如果相等，则直接替换 val；如果不相等需要判断是树结构还是链表结构，做出相应处理。如果添加时发现容量不够，则需要扩容
+
+- 第1次添加，则需要扩容 table 容量为16，临界值（threshold）为12
+
+- 以后再扩容，则需要扩容 table 容量为原来的 2 倍，临界值为原来的 2 倍，即24，依次类推
+
+- 在Java8中，如果一条链表的元素个数超过 TREEIFY_THRESHOLD（默认是8），并且table 的大小 >= MIN_TREEIFY_ CAPACITY（默认64），就会进行树化（红黑树）
+
+## Hashtable
+
+### 基本介绍
+
+- 存放的元素是键值对：即K-V
+
+- hashtable 的键和值都不能为 null，否则会抛出NullPointerException
+
+- hashtable 使用方法基本上和 HashMap 一样
+
+- hashtable 是线程安全的，hashMap 是线程不安全的
+
+### Hashtable 和 HashMap 对比
+
+|           | 版本 | 线程安全 | 效率 | 允许空值 |
+| :-------- | :--: | :------: | :--: | :------: |
+| HashMap   | 1.2  |  不安全  |  高  |   可以   |
+| Hashtable | 1.0  |   安全   |  低  |  不可以  |
+
+## Properties
+
+### 基本介绍
+
+- Properties 类继承自 Hashtable 类并且实现了 Map 接口，也是使用一种键值对的形式来保存数据
+
+- 他的使用特点和 Hashtable 类似
+
+- Properties 还可以用于从 xxx.properties 文件中，加载数据到 Properties 类对象，并进行读取和修改
+
+- 说明：工作后 xxx.properties 文件通常作为配置文件，这个知识点在IO流举例，有兴趣可先看文章
+
+## TreeMap
+
+```java
+// 匿名内部类排序
+TreeMap<String, Integer> tm = new TreeMap<>(new Comparator<String>() {
+	@Override
+	public int compare(String o1, String o2) {
+		return o1.compareTo(o2); // 由该函数判断是否相同，如果等于0，加入不了
+	}
+});
+// put
+tm.put("a", 1);
+tm.put("j", 9);
+tm.put("z", 26);
+tm.put("c", 5);
+// print
+System.out.println(tm);
+```
+
+
+
+## 开发中如何选择集合实现类
+
+在开发中，选择什么集合实现类，主要取决于业务操作特点，然后根据集合实现类特性进行选择，分析如下
+
+1. 先判断存储的类型（一组对象（单列）或一组键值对（双列））
+
+2. 一组对象[单列]：Collection接口
+
+    - 允许重复：List
+
+        - 增删多：LinkedList （底层维护了一个双向链表）
+
+        - 改查多：ArrayList（底层维护Object类型的可变数组）
+
+    - 不允许重复：Set
+
+        - 无序：HashSet（底层是 HashMap，维护了一个哈希表即（数组+链表+红黑树））
+
+        - 排序：TreeSet
+
+        - 插入和取出顺序一致：LinkedHashSet，维护数组+双向链表
+
+3. 一组键值对：Map
+    - 键无序：HashMap（底层是：哈希表，jdk7:数组+链表，jdk8:数组+链表+红黑树）
+    - 键排序：TreeMap     
+    - 键健插入和取出顺序一致：LinkedHashMap 
+    - 读取文件 Properties
+
