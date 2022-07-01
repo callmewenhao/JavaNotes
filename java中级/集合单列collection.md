@@ -303,6 +303,7 @@ JDK API 中 Set 接口的实现类有：
 - HashSet 底层是HashMap，第一次添加时，table 数组扩容到 16，临界值（threshold 是 16）\*加载因子（loadFactor 是 0.75）= 12
 - 如果 table 数组使用到了临界值 12，就会扩容到16\*2 =32，新的临界值就是 32*0.75 = 24，依次类推
 - 在 Java8 中，如果一条链表的元素个数到达 TREEIFY_THRESHOLD （默认是 8），并且 table 的大小>=MIN_TREEIFY_CAPACITY（默认64），就会进行树化（红黑树）。否则仍然采用数组扩容机制
+- 在删除的时候，也是通过 index 值进行的（index 值的计算是通过 key 的 hash 值计算的）
 
 ## Set接口实现类——LinkedHashSet
 
