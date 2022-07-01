@@ -165,6 +165,8 @@ while(iterator.hasNext()) {
 
 ## TreeMap
 
+> TreeMap、TreeSet 中存放的对象，要实现 comparable 接口（重写 compareTo函数），否则报错
+
 ```java
 // 匿名内部类排序
 TreeMap<String, Integer> tm = new TreeMap<>(new Comparator<String>() {
@@ -210,3 +212,10 @@ System.out.println(tm);
     - 键健插入和取出顺序一致：LinkedHashMap 
     - 读取文件 Properties
 
+## 课后题
+
+试分析 HashSet 和 TreeSet 分别如何实现去重的
+
+1. HashSet 的去重机制：hashCode() + equals()，底层先通过存入对象，进行运算得到一个 hash 值，通过 hash 值得到对应的索引，如果发现 table 索引所在的位置，没有数据，就直接存放，如果有数据，就进行 equals 比较[遍历比较]，如果比较后，不相同,就加入，否则就不加入
+
+2. TreeSet 的去重机制：如果你传入了一个 Comparator 匿名对象，就使用实现的 compare 去重，如果方法返回 0，就认为是相同的元素/数据，就不添加；如果你没有传入一个 Comparator 匿名对象，则以你添加的对象实现的 Compareable 接口的compareTo 去重
