@@ -311,7 +311,7 @@ JDK API 中 Set 接口的实现类有：
 
 - LinkedHashSet 是 HashSet 的子类
 
-- LinkedHashSe t底层是一个 LinkedHashMap，底层维护了一个数组+双向链表
+- LinkedHashSet 底层是一个 LinkedHashMap，底层维护了一个数组+双向链表
 
 - LinkedHashSet 根据元素的 hashCode 值来决定元素的存储位置，同时使用链表维护元素的次序（图），这使得元素看起来是以插入顺序保存的
 
