@@ -435,3 +435,209 @@ bufferedInputStream.close();
 bufferedOutputStream.close();
 ```
 
+### 对象处理流（序列化、反序列化）
+
+对象流：ObjectInputStream 和 ObjectOutputStream
+
+**看一个需求**
+
+将 int num = 100 这个 int 数据保存到文件中，注意不是 100 数字，而是 int 100，并且，能够从文件中直接恢复 int 100；将 Dog dog = new Dog(“小黄”，3)，这个 dog 对象保存到文件中，并且能够从文件恢复
+
+上面的要求，就是能够将基本数据类型或者对象进行序列化和反序列化操作
+
+**序列化和反序列化**
+
+序列化就是在保存数据时，保存**数据的值和数据类型**
+
+反序列化就是在恢复数据时，恢复**数据的值和数据类型**
+
+需要让某个对象支持序列化机制，则必须让其类是可序列化的，为了让某个类是可序列化的，该类必须实现如下两个接口之一：
+
+- Serializable // 这是一个标记接口
+
+- Externalizable // 该接口有方法需要实现，因此我们一般实现上面的
+
+**ObjectInputStream 和 ObjectOutputStream 功能：**
+
+- 提供了对基本类型或对象类型的序列化和反序列化的方法
+
+- ObjectOutputStream 提供序列化功能
+
+- ObjectInputStream 提供反序列化功能
+
+### ObjectOutputStream
+
+```java
+// 使用ObjectOutputStream序列化基本数据类型和一个Dog对象(name, age),
+// 并保存到data.dat文件中ObjectOutStream .java
+
+String filePath = "f:\\data.dat";
+ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath));
+
+objectOutputStream.writeInt(100);
+objectOutputStream.writeBoolean(true);
+objectOutputStream.writeChar('a');
+objectOutputStream.writeDouble(9.5);
+objectOutputStream.writeUTF("赵文豪");
+objectOutputStream.writeObject(new Dog("旺财", 12));
+
+objectOutputStream.close();
+```
+
+### ObjectInputStream
+
+```java
+String filePath = "f:\\data.dat";
+ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath));
+// 反序列化的顺序要和序列化的顺序一致，否则异常
+
+System.out.println(objectInputStream.readInt());
+System.out.println(objectInputStream.readBoolean());
+System.out.println(objectInputStream.readChar());
+System.out.println(objectInputStream.readDouble());
+System.out.println(objectInputStream.readUTF());
+
+Object dog = objectInputStream.readObject(); // 如果要向下转型，要能import该类
+System.out.println("运行类型：" + dog.getClass());
+System.out.println(dog);
+
+objectInputStream.close();
+```
+
+### 对象流使用细节
+
+- 读写顺序要一致
+
+- 要求实现序列化或反序列化对象，需要实现 Serializable
+
+- 序列化的类中建议添加 SerialVersionUID，为了提高版本的兼容性
+
+- 序列化对象时，默认将里面所有属性都进行序列化，但除了 static 或 transient 修饰的成员
+
+    使用 transient  修饰后的属性在反序列化后看不到
+
+- 序列化对象时，要求里面属性的类型也需要实现序列化接口
+
+- 序列化具备可继承性，也就是如果某类已经实现了序列化，则它的所有子类也已经默认实现了序列化
+
+## 标准输入和输出流
+
+```java
+// System 类的 public final static InputStream in = null;
+// System.in 编译类型 InputStream
+// System.in 运行类型 BufferedInputstream
+//表示的是标准输入键盘
+system.out.println(System.in.getClass();
+
+//1. System.out public final static PrintStream out = null;
+//2．编译类型 PrintStream
+//3，运行类型 PrintStream
+//4．表示标准输出显示器
+system.out.println(system.out.getclass());
+```
+
+## 转换流
+
+> 可以将**字节流**以**某种编码**转换成**字符流**
+
+### 介绍
+
+1. InputStreamReader：Reader 的子类，可以将 InputStream（字节流）包装成 Reader（字符流）
+2. OutputStreamWriter：Writer 的子类，实现将 OutputStream（字节流）包装成 Writer（字符流）
+3. 当处理纯文本数据时，如果使用字符流效率更高，并且可以有效解决中文问题，所以建议将字节流转换成字符流
+4. 可以在使用时指定编码格式（比如：utf-8，gbk，gb2312，ISO8859-1等）
+
+### InputStreamReader
+
+```java
+String filePath = "f:\\a.txt"; // 编码gbk
+// 将字节流转成字符流再放入处理流
+BufferedReader br = new BufferedReader(
+    new InputStreamReader(new FileInputStream(filePath), "gbk")
+);
+// read data
+String s = br.readLine();
+System.out.println(s);
+br.close();
+```
+
+### OutputStreamWriter
+
+```java
+String filePath = "f:\\d.txt"; // 保存为编码gbk
+String cs = "gbk"; // 指定保存的编码
+
+BufferedWriter bufferedWriter = new BufferedWriter(
+    new OutputStreamWriter(new FileOutputStream(filePath), cs)
+);
+bufferedWriter.write("zhao文豪！");
+bufferedWriter.close();
+```
+
+## 打印流
+
+> 只有输出流：PrintStream（字节流） 和 PrintWriter（字符流）
+
+```java
+// PrintStream
+PrintStream out = System.out;
+out.println("hello, world!");
+out.write("wenhao".getBytes());
+// 修改打印输出的设备 向文件中打印
+System.setOut(new PrintStream("f:\\e.txt"));
+out.close(); // 一定要有close
+
+// PrintWriter
+PrintWriter printWriter = new PrintWriter(System.out);
+// 当然也可以输出到文件
+printWriter.println("你好！");
+printWriter.close(); // 一定要有close
+```
+
+## properties 配置文件
+
+properties文件：专门用于读写配置文件的集合类配置文件的格式：键=值
+
+注意：键值对不需要有空格，值不需要用引号一起来。默认类型是 String
+
+## Properties 类
+
+**Properties 的常见方法**
+
+- load：加载配置文件的键值对到 Properties 对象
+
+- list：将数据显示到指定设备/流对象
+
+- getProperty(key)：根据键获取值
+
+- setProperty(key,value)：设置键值对到 Properties 对象
+
+- store：将 Properties 中的键值对存储到配置文件，在 idea 中，保存信息到配置文件，如果含有中文，会存储为 unicode 码
+
+### 读取 properties 文件
+
+```java
+Properties properties = new Properties();
+properties.load(new FileReader("src\\mysql.properties"));
+properties.list(System.out);
+// 根据key获取值
+String user = properties.getProperty("user");
+System.out.println(user);
+String pwd = properties.getProperty("pwd");
+System.out.println(pwd);
+```
+
+### 修改 properties 文件
+
+```java
+// 有则修改，无则创建
+Properties properties = new Properties();
+properties.setProperty("charset", "utf8");
+properties.setProperty("user", "文豪");
+properties.setProperty("pwd", "abc1234");
+
+// 存储 创建
+properties.store(new FileOutputStream("src\\mysql2.properties"), "this is comments");
+System.out.println("save successfully!");
+```
+
