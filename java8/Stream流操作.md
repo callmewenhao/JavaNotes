@@ -36,13 +36,72 @@ Java8 中的 Arrays 的静态方法 stream() 可以获取数组流
 - `public static LongStream stream(long[] array)`
 - `public static DoubleStream stream(double[] array)`
 
-## Java8 Stream 流简介
+### 通过 Stream 类的 of() 方法
 
-Java8 中有两大最为重要的改变。第一个是 lambda 表达式；另外一个则是 Stream API。
+> 用的比较少
 
-Stream APl(java.util.stream) 把真正的函数式编程风格引入到 Java 中。这是目前为止对 Java 类库最好的补充，因为 Stream API 可以极大提供 Java 程序员的生产力，让程序员写出高效率、干净、简洁的代码。
+- `static <T> Stream<T> of(T t)`: Returns a sequential Stream containing a single element.
 
-Stream 是 Java8 中处理集合的关键抽象概念，它可以指定你希望对集合进行的操作，可以执行非常复杂的查找、过滤和映射数据等操作。 
+- `static <T> Stream<T> of(T... values)`: Returns a sequential ordered stream whose elements are the specified values.
 
-使用 Stream API 对集合数据进行操作，就类似于使用 SQL 执行的数据库查询。也可以使用 Stream API来并行执行操作。简言之，Stream API 提供了一种高效且易于使用的处理数据的方式。
+```java
+var s = Stream.of(1, 2, 3, 4, 5);
+```
+
+### 创建无限流
+
+> 了解一下，当需要造一些数据时使用，比较省事
+
+- 迭代：`static <T> Stream<T>	iterate(T seed, UnaryOperator<T> f)`，如果中间操作不加限制，程序就会一直迭代下去
+
+- 生成：`static <T> Stream<T>	generate(Supplier<T> s)`，同样的，如果中间操作不加限制，程序就会一直迭代下去
+
+## intermediate operations（中间操作）
+
+### 筛选与切片
+
+- `filter(Predicate p)`：接收 lambda 从流中排除某些元素。只留下 p 为返回值为真的元素
+- `distinct()`：筛选，通过流所生成元素的 `hashCode()` 和 `equals()` 去除重复元素
+- `limit(long maxSize)`：截断流，使其元素不超过给定数量
+- `skip(long n)`：跳过元素，返回一个扔掉了前 n 个元素的流。若流中元素不足 n 个，则返回一个空流。与 `limit(n)` 互补
+
+```java
+import java.util.stream.Stream;
+import java.util.stream.IntStream;
+
+public class Main {
+    public static void main(String[] args) {
+        int[] a = {1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9};
+        IntStream s = Arrays.stream(a);
+        s.filter(x -> x % 2 == 0).distinct().forEach(System.out::print);  // 注意，流 s 一旦执行终止操作，就无法再使用了
+        System.out.println();  // 2468
+
+        // s.filter(x -> x % 2 == 0).distinct().limit(2).forEach(System.out::print);
+        // System.out.println();  // 24
+        
+        String[] str = {"1", "2", "2", "3", "3"};
+        Arrays.stream(str).distinct().forEach(System.out::print); // 123
+    }
+};
+```
+
+### 映射
+
+- `map(Function f)`：接收一个函数作为参数，该函数会被应用到每个元素上，并将其映射成一个新的元素
+- `mapTolnt(TolntFunction f)`：接收一个函数作为参数，该函数会被应用到每个元素上，产生一个新的 IntStream
+- `mapToDouble(ToDoubleFunction f)`：接收一个函数作为参数，该函数会被应用到每个元素上，产生一个新的 DoubleStream
+- `mapToLong(ToLongFunction f)`：接收一个函数作为参数，该函数会被应用到每个元素上，产生一个新的 LongStream
+- `flatMap(Function f)`：接收一个函数作为参数，将流中的每个值都换成另一个流，然后把所有流连接成一个流
+
+```java
+List<String> list = Arrays.asList("aa", "bb", "cc", "dd"); // a list view of the specified array
+list.stream().map(String::toUpperCase).forEach(System.out::print); // AABBCCDD
+```
+
+### 排序
+
+
+
+## terminal operation（终端操作）
+
 
