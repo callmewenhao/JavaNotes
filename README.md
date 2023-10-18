@@ -14,7 +14,7 @@
 
 [类变量和类方法](javaSEpart2/类变量和类方法（静态类、静态方法）.md)、[代码块](javaSEpart2/代码块.md)、[抽象类](javaSEpart2/抽象类.md)、[接口](javaSEpart2/接口.md)、[包装类](javaSEpart2/包装类.md)、[String类等](javaSEpart2/StringStringBufferStringBuilder.md)、[内部类](javaSEpart2/内部类.md)、[枚举类](javaSEpart2/枚举类.md)、[日期类](javaSEpart2/日期类.md)、[System类](javaSEpart2/System类.md)、[Arrays类](javaSEpart2/Arrays类.md)
 
-[单列集合collection](javaSEpart2/集合单列collection.md)、[常用集合](javaSEpart2/常用集合.md)、[双列集合map](javaSEpart2/集合双列map.md)、[collections工具类](javaSEpart2/collections工具类.md)、[泛型](javaSEpart2/泛型.md)
+[常用集合](javaSEpart2/常用集合.md)、[单列集合collection](javaSEpart2/集合单列collection.md)、[双列集合map](javaSEpart2/集合双列map.md)、[collections工具类](javaSEpart2/collections工具类.md)、[泛型](javaSEpart2/泛型.md)
 
 ## Java 高级 💪
 
