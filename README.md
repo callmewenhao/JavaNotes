@@ -30,5 +30,5 @@ Java 笔记🥳🎉🚀
 - [注解与反射](javaSEpart3/注解与反射.md)
 - [网络编程](javaSEpart3/网络编程.md)
 - [文件 IO 流](javaSEpart3/文件IO流.md)
--[Java 事件处理机制.md](javaSEpart3/java事件处理机制.md)
+- [Java 事件处理机制.md](javaSEpart3/java事件处理机制.md)
 - [绘图](javaSEpart3/绘图.md)
