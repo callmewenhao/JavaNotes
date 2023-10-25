@@ -100,8 +100,61 @@ list.stream().map(String::toUpperCase).forEach(System.out::print); // AABBCCDD
 
 ### 排序
 
+- sorted()，默认排序，使用默认排序接口
+- sorted(Comparator<? super T> comparator)，自定义排序
 
+```java
+// 默认排序
+int[] a = {9, 9, 8, 8, 7, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1};
+IntStream s = Arrays.stream(a);  // 注意 IntStream 无法进行自定义排序
+s.distinct().sorted().forEach(System.out::print);
+System.out.println();  // 123456789
+```
 
 ## terminal operation（终端操作）
+
+### 匹配与查找
+
+- `allMatch(Predicate p)`：检查是否匹配所有元素，返回 boolean
+- `anyMatch(Predicate p)`：检查是否至少匹配一个元素，返回 boolean
+- `noneMatch(Predicate p)`：检查是否没有匹配所有元素，返回 boolean
+- `findFirst()`：返回第一个元素
+- `findAny()`：返回当前流中的任意元素
+- `count()`：求元素个数
+- `max(Comparator<? super T> comparator)`：返回最大值
+- `min(Comparator<? super T> comparator)`：返回最小值
+- `forEach(Consumer<? super T> action)`：内部迭代，处理每个元素
+
+### 归约
+
+- `reduce(T iden, BinaryOperator b)`：可以将流中元素反复结合起来，得到一个值。返回 `T` 
+- `reduce(BinaryOperator b)`：可以将流中元素反复结合起来，得到一个值。返回 `Optional<T>`
+
+```java
+// 归约求和举例
+int[] a = {1, 2, 3, 4, 5};
+int s = Arrays.stream(a).reduce(0, Integer::sum); // 0 表示初始值
+System.out.println(s);  // 15
+```
+
+备注：map 和 reduce 的连接通常称为 **map-reduce** 模式，因 Google 用它来进行网络搜索而出名
+
+### 收集
+
+- `collect(Collector c)`：将流转换为其他形式。接收一个 Collector 接口的实现，用于给 Stream 中元素做汇总的方法
+
+```java
+Integer[] a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+List<Integer> collect = Stream.of(a).filter(x -> x % 2 == 0).collect(Collectors.toList());
+List<Integer> collect = Stream.of(a).filter(x -> x % 2 == 0).toList();
+Set<Integer> collect = Stream.of(a).filter(x -> x % 2 == 0).collect(Collectors.toSet());
+```
+
+Collector 接口中方法的实现决定了如何对流执行收集的操作（如收集到 List、Set、Map)
+
+另外，Collectors 实用类提供了很多静态方法，可以方便地创建常见收集器实例，具体方法与实例如下表：
+
+
+
 
 
