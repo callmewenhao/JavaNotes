@@ -8,7 +8,7 @@ create table tb_brand (
     company_name varchar(20), -- 企业名
     ordered      int,         -- 排序字段
     description  varchar(100),-- 描述信息
-    status       int          -- 状态
+    status       int          -- 状态tb_brand
 );
 
 insert into tb_brand 
