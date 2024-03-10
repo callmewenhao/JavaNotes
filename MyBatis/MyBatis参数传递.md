@@ -23,9 +23,9 @@ MyBatis 底层使用 ParamNameResolver 类来进行参数封装
 - 其他类型：int 等类型，SQL 中参数占位符名称无所谓
 
 多个参数：
-- 需要使用 @Para 注解定义名称
+- 需要使用 @Param 注解定义名称
 - MyBatis 会使用 Map 封装参数，但是键值默认是：param1 ... parami 或者使用 arg0 ... arg1
-- 使用 @Para 注解设置一个新键值，用于替代 argi 键值，parami 还会保留
+- 使用 @Param 注解设置一个新键值，用于替代 argi 键值，parami 还会保留
 
 建议：将来都使用 @Param 注解来修改 Map 集合中默认的键名，并使用修改后的名称来获取值，这样可读性更高!
 
